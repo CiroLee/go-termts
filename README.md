@@ -13,7 +13,7 @@ go-termts(or gt) <command> [flags]
 
 ## Features     
 ### license     
-> Output output LICENSE in an interactive way 
+> Output LICENSE in an interactive way 
 ```shell
 gt license
 ```
