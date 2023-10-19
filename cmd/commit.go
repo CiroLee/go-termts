@@ -102,8 +102,8 @@ func commitPrompts(lang string) []string {
 }
 
 var commitCmd = &cobra.Command{
-	Use:  "commit",
-	Long: "shortcut for git commit, support zh(for Chinese) and en(for English) flags",
+	Use:   "commit",
+	Short: "shortcut for git commit, support zh(for Chinese) and en(for English) flags",
 	Run: func(cmd *cobra.Command, args []string) {
 		var lang string
 		// default zh
