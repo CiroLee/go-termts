@@ -8,9 +8,8 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:     "go-termts",
-	Aliases: []string{"gt"},
-	Long:    "A common and useful terminal commands written in go",
+	Use:  "go-termts",
+	Long: "A common and useful terminal commands written in go",
 }
 
 func Execute() {

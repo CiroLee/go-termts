@@ -12,7 +12,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const COMMIT_SHORT = "shortcut for git commit -m, support zh(for Chinese) and en(for English) flags"
+
 func init() {
+	commitCmd.Flags().BoolP("commit", "c", false, COMMIT_SHORT)
 	rootCmd.AddCommand(commitCmd)
 }
 
@@ -102,8 +105,9 @@ func commitPrompts(lang string) []string {
 }
 
 var commitCmd = &cobra.Command{
-	Use:   "commit",
-	Short: "shortcut for git commit, support zh(for Chinese) and en(for English) flags",
+	Use:     "commit",
+	Short:   COMMIT_SHORT,
+	Aliases: []string{"c"},
 	Run: func(cmd *cobra.Command, args []string) {
 		var lang string
 		// default zh

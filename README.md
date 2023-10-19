@@ -8,13 +8,19 @@ go install github.com/CiroLee/go-termts
 
 ## Usage 
 ```shell
-go-termts(or gt) <command> [flags]
+go-termts <command> [flags]
 ```
 
 ## Features     
-### license     
-> Output LICENSE in an interactive way 
-```shell
-gt license
-```
 
+### license     
+> output LICENSE in an interactive way 
+
+### version       
+> output version of go-termts      
+
+### commit        
+> shortcut for git commit -m, support zh(for Chinese) and en(for English) flags       
+
+### repo      
+> open current git project in your default browser     

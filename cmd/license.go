@@ -19,10 +19,12 @@ import (
 )
 
 const LICENSE_URL = "https://api.github.com/licenses"
+const LICENSE_SHORT = "Output output LICENSE"
 
 var loading = spinner.New(spinner.CharSets[26], 200*time.Millisecond)
 
 func init() {
+	licenseCmd.Flags().BoolP("license", "l", false, LICENSE_SHORT)
 	rootCmd.AddCommand(licenseCmd)
 }
 
@@ -78,8 +80,9 @@ func inputPrompt(label string, validate func(input string) error) (string, error
 }
 
 var licenseCmd = &cobra.Command{
-	Use:   "license",
-	Short: "Output output LICENSE ",
+	Use:     "license",
+	Short:   LICENSE_SHORT,
+	Aliases: []string{"l"},
 	Run: func(cmd *cobra.Command, args []string) {
 		// get license list
 		license := getJson[[]map[string]string](LICENSE_URL, "loading")
@@ -100,7 +103,7 @@ var licenseCmd = &cobra.Command{
 		if needSignature(l) {
 			name, err := inputPrompt("Name", func(input string) error {
 				if len(input) < 1 {
-					return errors.New("Invalid name")
+					return errors.New("invalid name")
 				}
 				return nil
 			})
@@ -110,10 +113,13 @@ var licenseCmd = &cobra.Command{
 			year, err := inputPrompt("Year", func(input string) error {
 				_, err := strconv.Atoi(input)
 				if err != nil {
-					return errors.New("Invalid year")
+					return errors.New("invalid year")
 				}
 				return nil
 			})
+			if err != nil {
+				utils.CommonExit(err)
+			}
 			l = strings.Replace(l, "[fullname]", name, -1)
 			l = strings.Replace(l, "[year]", year, -1)
 		}
