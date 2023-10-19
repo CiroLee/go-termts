@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/CiroLee/gear/gearslice"
@@ -133,7 +134,8 @@ var commitCmd = &cobra.Command{
 			utils.CommonExit(err)
 		}
 
-		_, err = utils.ExecuteCommand("git", "commit", "-m", gearstring.Contact(`"`, gitType, ": ", msg, `"`))
+		str, err := utils.ExecuteCommand("git", "commit", "-m", gearstring.Contact(`"`, gitType, ": ", msg, `"`))
+		fmt.Println(str)
 		if err != nil {
 			utils.CommonExit(err)
 		}
