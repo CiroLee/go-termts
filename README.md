@@ -14,13 +14,13 @@ go-termts <command> [flags]
 ## Features     
 
 ### license     
-> output LICENSE in an interactive way 
+output LICENSE in an interactive way 
 
 ### version       
-> output version of go-termts      
+output version of go-termts      
 
 ### commit        
-> shortcut for git commit -m, support zh(for Chinese) and en(for English) flags       
+shortcut for git commit -m, support zh(for Chinese) and en(for English) flags       
 
 ### repo      
-> open current git project in your default browser     
+open current git project in your default browser     
