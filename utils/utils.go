@@ -37,3 +37,8 @@ func Open(url string) error {
 	args = append(args, url)
 	return exec.Command(cmd, args...).Start()
 }
+
+func Exists(path string) bool {
+	_, err := os.Stat(path)
+	return !os.IsNotExist(err)
+}

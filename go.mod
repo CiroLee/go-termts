@@ -3,7 +3,7 @@ module github.com/CiroLee/go-termts
 go 1.21.2
 
 require (
-	github.com/CiroLee/gear v1.0.2
+	github.com/CiroLee/gear v1.0.3
 	github.com/briandowns/spinner v1.23.0
 	github.com/manifoldco/promptui v0.9.0
 	github.com/spf13/cobra v1.7.0

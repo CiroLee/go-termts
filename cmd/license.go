@@ -1,19 +1,14 @@
 package cmd
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
-	"net/http"
 	"os"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/CiroLee/gear/gearslice"
 	"github.com/CiroLee/go-termts/utils"
-	"github.com/briandowns/spinner"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
@@ -21,29 +16,9 @@ import (
 const LICENSE_URL = "https://api.github.com/licenses"
 const LICENSE_SHORT = "Output output LICENSE"
 
-var loading = spinner.New(spinner.CharSets[26], 200*time.Millisecond)
-
 func init() {
 	licenseCmd.Flags().BoolP("license", "l", false, LICENSE_SHORT)
 	rootCmd.AddCommand(licenseCmd)
-}
-
-func getJson[T any](url string, loadingText string) T {
-	loading.Prefix = loadingText
-	loading.Start()
-	r, err := http.Get(url)
-	loading.Stop()
-	if err != nil {
-		log.Println(err)
-		os.Exit(1)
-	}
-	defer r.Body.Close()
-	var data T
-	err = json.NewDecoder(r.Body).Decode(&data)
-	if err != nil {
-		utils.CommonExit(err)
-	}
-	return data
 }
 
 func getLicenseByKey(key string, license []map[string]string) string {
@@ -54,7 +29,7 @@ func getLicenseByKey(key string, license []map[string]string) string {
 		return ""
 	}
 	url := r["url"]
-	data := getJson[map[string]any](url, "waiting...")
+	data := utils.GetJson[map[string]any](url, "waiting...")
 	fmt.Printf("data: %T\n", data["body"])
 	switch data["body"].(type) {
 	case string:
@@ -85,7 +60,7 @@ var licenseCmd = &cobra.Command{
 	Aliases: []string{"l"},
 	Run: func(cmd *cobra.Command, args []string) {
 		// get license list
-		license := getJson[[]map[string]string](LICENSE_URL, "loading")
+		license := utils.GetJson[[]map[string]string](LICENSE_URL, "loading")
 		// select license key
 		prompt := promptui.Select{
 			Label: "Select a license",
