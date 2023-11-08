@@ -17,15 +17,16 @@ func init() {
 const GITHUB_URL = "https://api.github.com/repos/CiroLee/my-config/contents/"
 
 var configMap = map[string]string{
-	"prettier":   ".prettierrc",
-	"commitlint": ".commitlintrc.js",
-	"vscode":     ".vscode/settings.json",
+	"prettier":     ".prettierrc",
+	"commitlint":   ".commitlintrc.js",
+	"vscode":       ".vscode/settings.json",
+	"editorconfig": ".editorconfig",
 }
 
 var configCmd = &cobra.Command{
 	Use:   "config",
 	Short: "download common used config files",
-	Long:  "download common used config files, support prettier,commitlint,vscode(vscode-settings)",
+	Long:  "download common used config files, support prettier,commitlint,vscode(vscode-settings),editorconfig",
 	Run: func(cmd *cobra.Command, args []string) {
 		download(args)
 	},
