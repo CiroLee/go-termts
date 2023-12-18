@@ -27,3 +27,6 @@ download common used config files, support `prettier`, `commitlint`, `vscode`(vs
 
 ### ip        
 output the local ip
+
+### alias        
+output alias from your `.zshrc` file

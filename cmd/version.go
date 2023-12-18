@@ -7,7 +7,7 @@ import (
 )
 
 const VERSION_SHORT = "Print the version number of go-termts"
-const VERSION = "0.0.6"
+const VERSION = "0.0.7"
 
 func init() {
 	versionCmd.Flags().BoolP("version", "v", false, VERSION_SHORT)
