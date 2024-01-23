@@ -30,3 +30,13 @@ output the local ip
 
 ### alias        
 output alias from your `.zshrc` file
+
+### dgit      
+download github repository. support custom branch and custom path. default branch is repo's default branch and default path is current directory.     
+
+```shell
+# help
+go-termts dgit <repo> [--branch] [--dst]
+# example
+go-termts dgit https://github.com/CiroLee/go-termts --branch=main --dst=demo
+```
