@@ -3,6 +3,7 @@ package cmd
 import (
 	"archive/tar"
 	"compress/gzip"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -44,7 +45,10 @@ var dGitCmd = &cobra.Command{
 	Short: "download github repository",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		repoUrl := args[0]
+		repoUrl, err := transRepoUrl(args[0])
+		if err != nil {
+			utils.CommonExit(err)
+		}
 		info, err := getUserAndRepo(repoUrl)
 		if err != nil {
 			log.Fatal(err)
@@ -142,4 +146,18 @@ func getUserAndRepo(repoUrl string) (UserAndRepo, error) {
 	userName := strings.Split(rest, "/")[0]
 	repo := strings.Split(rest, "/")[1]
 	return UserAndRepo{userName: userName, repository: repo}, nil
+}
+
+func transRepoUrl(url string) (string, error) {
+	if url == "" {
+		return "", errors.New("invalid repo url")
+	} else if strings.HasPrefix(url, "git@") && strings.HasSuffix(url, ".git") {
+		url, _ = strings.CutPrefix(url, "git@")
+		url, _ = strings.CutSuffix(url, ".git")
+		url = strings.ReplaceAll(url, ":", "/")
+		url = "https://" + url
+	} else if strings.HasPrefix(url, "https://") && strings.HasSuffix(url, ".git") {
+		url, _ = strings.CutSuffix(url, ".git")
+	}
+	return url, nil
 }
