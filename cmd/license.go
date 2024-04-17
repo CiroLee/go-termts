@@ -14,7 +14,7 @@ import (
 )
 
 const LICENSE_URL = "https://api.github.com/licenses"
-const LICENSE_SHORT = "Output output LICENSE"
+const LICENSE_SHORT = "Output common LICENSE"
 
 func init() {
 	licenseCmd.Flags().BoolP("license", "l", false, LICENSE_SHORT)
