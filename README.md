@@ -1,4 +1,7 @@
-# go-termts
+<div align="center">
+  <img src="./assets/termts-icon-512.png" style="width: 320px" alt="banner" />
+  <h1 align="left">go-termts</h1>
+</div>
 
 > common and useful terminal commands written in go
 
