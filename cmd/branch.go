@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/CiroLee/go-termts/utils"
@@ -23,15 +22,16 @@ var lsBranchCmd = &cobra.Command{
 	Short: BRANCH_COMMIT,
 	Run: func(cmd *cobra.Command, args []string) {
 		remote, _ := cmd.Flags().GetBool("remote")
-		fmt.Printf("remote: %v\n", remote)
-		url, err := utils.ExecuteCommand("git", "branch", "-r")
+		var ext = ""
+		if remote {
+			ext = "-r"
+		}
+		branchesStr, err := utils.ExecuteCommand("git", "branch", ext)
 		if err != nil {
 			utils.CommonExit(err)
 		} else {
-			branches := strings.Split(url, "\n")
-			for i, v := range branches {
-				branches[i] = strings.Trim(v, "* ")
-			}
+			branches := strings.Split(branchesStr, "\n")
+			branches = utils.RemoveEmptyValues(branches)
 			prompt := promptui.Select{
 				Label: "Select Branch",
 				Items: branches,
@@ -41,10 +41,20 @@ var lsBranchCmd = &cobra.Command{
 			if err != nil {
 				utils.CommonExit(err)
 			} else {
-				fmt.Printf("b: %v\n", b)
+				switchBranch(b, remote)
 				// utils.ExecuteCommand("git", "checkout", b)
 			}
-
 		}
 	},
+}
+
+func switchBranch(tBranch string, remote bool) {
+	if remote {
+		local, _ := utils.ExecuteCommand("git", "branch")
+		if strings.Contains(local, tBranch) {
+			utils.ExecuteCommand("git", "checkout", tBranch)
+		} else {
+			utils.ExecuteCommand("git", "checkout", "-b", tBranch)
+		}
+	}
 }
