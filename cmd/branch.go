@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/CiroLee/gear/gearslice"
 	"github.com/CiroLee/go-termts/utils"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
@@ -39,27 +40,31 @@ var lsBranchCmd = &cobra.Command{
 				Size:  8,
 			}
 			_, b, err := prompt.Run()
+			b = strings.Trim(b, "* ")
+			b = strings.TrimPrefix(b, "origin/")
 			if err != nil {
 				utils.CommonExit(err)
 			} else {
 				switchBranch(b, remote)
-				// utils.ExecuteCommand("git", "checkout", b)
 			}
 		}
 	},
 }
 
 func switchBranch(tBranch string, remote bool) {
-	fmt.Printf("tBranch: %v\n", tBranch)
-	fmt.Printf("remote: %v\n", remote)
 	if remote {
 		// check if branch exists locally
 		local, _ := utils.ExecuteCommand("git", "branch")
-		if strings.Contains(local, tBranch) {
+		localArr := strings.Split(local, "\n")
+		localArr = utils.RemoveEmptyValues(localArr)
+		if gearslice.Includes(localArr, tBranch) {
 			utils.ExecuteCommand("git", "checkout", tBranch)
+		} else {
+			utils.ExecuteCommand("git", "checkout", "-b", "origin/"+tBranch)
 		}
 	} else {
-		utils.ExecuteCommand("git", "checkout", "-b", tBranch)
+		fmt.Println("Switching to local branch", tBranch)
+		utils.ExecuteCommand("git", "checkout", tBranch)
 	}
 
 }
