@@ -60,7 +60,7 @@ func switchBranch(tBranch string, remote bool) {
 		if gearslice.Includes(localArr, tBranch) {
 			utils.ExecuteCommand("git", "checkout", tBranch)
 		} else {
-			utils.ExecuteCommand("git", "checkout", "-b", "origin/"+tBranch)
+			utils.ExecuteCommand("git", "checkout", "-b", tBranch)
 		}
 	} else {
 		fmt.Println("Switching to local branch", tBranch)
