@@ -14,6 +14,7 @@ func CommonExit(err error) {
 
 func ExecuteCommand(name string, subName string, args ...string) (string, error) {
 	args = append([]string{subName}, args...)
+	args = RemoveEmptyValues(args)
 
 	cmd := exec.Command(name, args...)
 	bytes, err := cmd.CombinedOutput()
@@ -41,4 +42,14 @@ func Open(url string) error {
 func Exists(path string) bool {
 	_, err := os.Stat(path)
 	return !os.IsNotExist(err)
+}
+
+func RemoveEmptyValues[T ~string](slice []T) []T {
+	var result []T
+	for _, v := range slice {
+		if v != "" {
+			result = append(result, v)
+		}
+	}
+	return result
 }

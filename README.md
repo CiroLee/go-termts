@@ -53,3 +53,9 @@ go-termts dgit <repo> [--branch] [--dst]
 # example
 go-termts dgit https://github.com/CiroLee/go-termts --branch=main --dst=demo
 ```
+### branch   
+list branches and switch to target in current repo in an interactive way. support remote branches and local branches    
+
+```shell
+go-termts branch [--remote]/[-r]
+```
