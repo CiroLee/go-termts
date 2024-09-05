@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/CiroLee/go-termts/utils"
@@ -49,12 +50,16 @@ var lsBranchCmd = &cobra.Command{
 }
 
 func switchBranch(tBranch string, remote bool) {
+	fmt.Printf("tBranch: %v\n", tBranch)
+	fmt.Printf("remote: %v\n", remote)
 	if remote {
+		// check if branch exists locally
 		local, _ := utils.ExecuteCommand("git", "branch")
 		if strings.Contains(local, tBranch) {
 			utils.ExecuteCommand("git", "checkout", tBranch)
-		} else {
-			utils.ExecuteCommand("git", "checkout", "-b", tBranch)
 		}
+	} else {
+		utils.ExecuteCommand("git", "checkout", "-b", tBranch)
 	}
+
 }
