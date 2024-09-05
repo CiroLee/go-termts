@@ -10,12 +10,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const BRANCH_COMMIT = "list all branches in current repo width an interactive way"
+const BRANCH_COMMIT = "list branches and switch to target in current repo in an interactive way"
 
 var remote bool
 
 func init() {
-	lsBranchCmd.Flags().BoolVarP(&remote, "remote", "r", false, BRANCH_COMMIT)
+	lsBranchCmd.Flags().BoolVarP(&remote, "remote", "r", false, "list remote branches")
 	rootCmd.AddCommand(lsBranchCmd)
 }
 
