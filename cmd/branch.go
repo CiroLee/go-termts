@@ -22,7 +22,7 @@ var lsBranchCmd = &cobra.Command{
 	Short: BRANCH_COMMIT,
 	Run: func(cmd *cobra.Command, args []string) {
 		remote, _ := cmd.Flags().GetBool("remote")
-		var ext = ""
+		var ext string
 		if remote {
 			ext = "-r"
 		}

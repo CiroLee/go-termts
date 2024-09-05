@@ -14,6 +14,7 @@ func CommonExit(err error) {
 
 func ExecuteCommand(name string, subName string, args ...string) (string, error) {
 	args = append([]string{subName}, args...)
+	args = RemoveEmptyValues(args)
 
 	cmd := exec.Command(name, args...)
 	bytes, err := cmd.CombinedOutput()
